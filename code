@@ -1,0 +1,36 @@
+function mp4final
+%values needed for the formula 
+h= input('Given initial height: '); %measured in meters
+v = input('Given magnitude: '); % unit meter per seconds
+x_acc = input('Acceleration on x component: '); % considering the sign, unit meter per second squared
+y_acc = input('Acceleration on y component: '); % considering the sign, unit meter per second squared
+theta = input('Given angle: '); % the angle acceptable is in degrees
+
+%suppose max time to hit the ground is 1000
+t = 0:0.1:1000
+
+
+if y_acc ~= 0
+    y_acc = -y_acc;
+    x_acc = -x_acc;
+    
+    %x component
+    x = v.*cosd(theta).*t + (1/2)*x_acc.*t.^2;
+   
+    %y component
+    y = h + v.*sind(theta).*t + (1/2)*y_acc.*t.^2;
+    
+    noty = y < 0;
+    x(noty) = [];
+    y(noty) = [];
+    
+else y_acc == 0;
+    disp('Cannot compute free fall');
+end
+plot(x,y, '-.r')
+xlabel('Distance')
+ylabel('Height')
+grid on
+title('Graph of Problem 4')
+
+end
